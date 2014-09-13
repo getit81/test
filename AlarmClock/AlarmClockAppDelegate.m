@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 ___FULLUSERNAME___. All rights reserved.
 //
 
-#import "AppDelegate.h"
+#import "AlarmClockAppDelegate.h"
 
-@implementation AppDelegate
+@implementation AlarmClockAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {

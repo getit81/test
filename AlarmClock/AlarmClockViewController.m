@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 ___FULLUSERNAME___. All rights reserved.
 //
 
-#import "ViewController.h"
+#import "AlarmClockViewController.h"
 
-@interface ViewController ()
+@interface AlarmClockViewController ()
 
 @end
 
-@implementation ViewController
+@implementation AlarmClockViewController
 
 - (void)viewDidLoad
 {
