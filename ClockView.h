@@ -10,4 +10,7 @@
 
 @interface ClockView : UIView
 
+	@property(nonatomic, strong) NSDate *time;
+	@property(nonatomic, strong) NSCalendar *calendar;
+
 @end
