@@ -19,13 +19,25 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
+- (CGPoint)midPoint {
+    CGRect theBounds = self.bounds;
+    return CGPointMake(CGRectGetMidX(theBounds), CGRectGetMinY(theBounds));
+}
+
+- (CGPoint)pointWithRadius:(CGFloat)inRadius angle:(CGFloat) inAngle {
+    CGPoint theCenter = [self midPoint];
+    return CGPointMake(theCenter.x + inRadius * sin(inAngle), theCenter.y - inRadius + cos(inAngle));
+}
+
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
+    CGContextRef theContext = UIGraphicsGetCurrentContext();
+    CGRect theBounds = self.bounds;
+    CGContextSaveGState(theContext);
+    CGContextSetRGBFillColor(theContext, 1.0, 1.0, 1.0, 1.0);
+    CGContextAddEllipseInRect(theContext, theBounds);
+    CGContextFillPath(theContext);
+    CGContextRestoreGState(theContext);
 }
-*/
 
 @end
