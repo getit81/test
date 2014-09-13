@@ -8,14 +8,40 @@
 
 #import "ClockView.h"
 
+@interface ClockView ()
+
+	@property(nonatomic, strong) NSTimer *timer;
+
+@end
+
 @implementation ClockView
 
 	- (id)initWithFrame:(CGRect)inFrame {
 		self = [super initWithFrame:inFrame];
 		if (self) {
-			// Initialization code
+			self.calendar = [NSCalendar currentCalendar];
+			self.time = [NSDate date];
 		}
 		return self;
+	}
+
+	- (void)dealloc {
+		[self stopAnimation];
+	}
+
+//	- (id)initWithCoder:(NSCoder *)inCoder {
+//		self = [super initWithCoder:inCoder];
+//		if (self) {
+//			self.calendar = [NSCalendar currentCalendar];
+//			self.time = [NSDate date];
+//		}
+//		return self;
+//	}
+
+	- (void)awakeFromNib {
+		[super awakeFromNib];
+		self.calendar = [NSCalendar currentCalendar];
+		self.time = [NSDate date];
 	}
 
 	- (CGPoint)midPoint {
@@ -76,7 +102,7 @@
 
 		// Stundenzeiger zeichnen
 		CGPoint thePoint = [self pointWithRadius:theRadius * 0.7 angle:theHour];
-		CGContextSetRGBStrokeColor(theContext, 0.25, 0.25, 0.25, 0.25);
+		CGContextSetRGBStrokeColor(theContext, 0.25, 0.25, 0.25, 1.0);
 		CGContextSetLineWidth(theContext, 8.0);
 		CGContextSetLineCap(theContext, kCGLineCapButt);
 		CGContextMoveToPoint(theContext, theCenter.x, theCenter.y);
@@ -93,10 +119,26 @@
 		// Sekundenzeiger zeichnen
 		thePoint = [self pointWithRadius:theRadius * 0.95 angle:theSecond];
 		CGContextSetLineWidth(theContext, 2.0);
-		CGContextSetRGBStrokeColor(theContext, 1.0, 1.0, 1.0, 1.0);
+		CGContextSetRGBStrokeColor(theContext, 1.0, 0.0, 0.0, 1.0);
 		CGContextMoveToPoint(theContext, theCenter.x, theCenter.y);
 		CGContextAddLineToPoint(theContext, thePoint.x, thePoint.y);
 		CGContextStrokePath(theContext);
+	}
+
+	- (void)startAnimation {
+		if (self.timer == nil) {
+			self.timer = [NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(updateTime:) userInfo:nil repeats:YES];
+		}
+	}
+
+	- (void)stopAnimation {
+		[self.timer invalidate];
+		self.timer = nil;
+	}
+
+	- (void)updateTime:(NSTimer *)inTimer {
+		self.time = [NSDate date];
+		[self setNeedsDisplay];
 	}
 
 @end
